@@ -4,8 +4,8 @@ plugins {
   id "signing"
 }
 
-group "io.github.jamsesso"
-version "1.0.4-Confluxsys"
+group "com.confluxsys"
+version "1.0.4-SNAPSHOT"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -35,7 +35,4 @@ artifacts {
   archives jar, javadocJar, sourcesJar
 }
 
-signing {
-  sign configurations.archives
-}
 

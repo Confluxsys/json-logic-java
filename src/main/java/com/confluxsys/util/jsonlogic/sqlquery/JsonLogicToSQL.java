@@ -11,9 +11,9 @@ public class JsonLogicToSQL extends BaseJsonLogic<JsonLogicToSQLEvaluator> {
         super(expression -> new JsonLogicToSQLEvaluator(expression));
         //Adding default operations
         this.addOperation(EqualityExpression.INSTANCE);
-        this.addOperation(InExpression.INSTANCE);
+//        this.addOperation(InExpression.INSTANCE);
         this.addOperation(LogicExpression.AND);
         this.addOperation(LogicExpression.OR);
-        this.addOperation(StrictEqualityExpression.INSTANCE);
+//        this.addOperation(StrictEqualityExpression.INSTANCE);
     }
 }
