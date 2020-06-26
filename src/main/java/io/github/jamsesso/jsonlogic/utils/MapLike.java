@@ -1,6 +1,8 @@
 package io.github.jamsesso.jsonlogic.utils;
 
-import com.google.gson.JsonObject;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Collection;
 import java.util.Map;
@@ -14,8 +16,8 @@ public class MapLike implements Map<Object, Object> {
     if (data instanceof Map) {
       delegate = (Map) data;
     }
-    else if (data instanceof JsonObject) {
-      delegate = (Map) JsonValueExtractor.extract((JsonObject) data);
+    else if (data instanceof ObjectNode) {
+      delegate = (Map) JsonValueExtractor.extract((ObjectNode) data);
     }
     else {
       throw new IllegalArgumentException("MapLike only works with maps and JsonObject");
@@ -83,6 +85,6 @@ public class MapLike implements Map<Object, Object> {
   }
 
   public static boolean isEligible(Object data) {
-    return data instanceof Map || data instanceof JsonObject;
+    return data instanceof Map || data instanceof JsonNode;
   }
 }

@@ -1,6 +1,7 @@
 package io.github.jamsesso.jsonlogic.utils;
 
-import com.google.gson.JsonArray;
+
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -24,8 +25,8 @@ public class ArrayLike implements List<Object> {
         delegate.add(i, transform(Array.get(data, i)));
       }
     }
-    else if (data instanceof JsonArray) {
-      delegate = (List) JsonValueExtractor.extract((JsonArray) data);
+    else if (data instanceof ArrayNode) {
+      delegate = (List) JsonValueExtractor.extract((ArrayNode) data);
     }
     else if (data instanceof Iterable) {
       delegate = new ArrayList<>();

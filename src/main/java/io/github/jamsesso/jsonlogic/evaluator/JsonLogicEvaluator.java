@@ -132,7 +132,7 @@ public class JsonLogicEvaluator {
     return handler.evaluate(this, operation.getArguments(), data);
   }
 
-  private Object transform(Object value) {
+  protected Object transform(Object value) {
     if (value instanceof Integer) {
       return ((Integer) value).doubleValue();
     }

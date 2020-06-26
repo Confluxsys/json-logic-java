@@ -1,8 +1,8 @@
 package io.github.jamsesso.jsonlogic.utils;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,43 +12,41 @@ import java.util.Map;
 public final class JsonValueExtractor {
   private JsonValueExtractor() { }
 
-  public static Object extract(JsonElement element) {
-    if (element.isJsonObject()) {
+  public static Object extract(JsonNode element) {
+    if (element.isObject()) {
       Map<String, Object> map = new HashMap<>();
-      JsonObject object = element.getAsJsonObject();
+      ObjectNode object = (ObjectNode)element;
 
-      for (String key : object.keySet()) {
-        map.put(key, extract(object.get(key)));
-      }
+      object.fields().forEachRemaining(
+             entry -> map.put(entry.getKey(), extract(entry.getValue()))
+      );
 
       return map;
     }
-    else if (element.isJsonArray()) {
+    else if (element.isArray()) {
       List<Object> values = new ArrayList<>();
 
-      for (JsonElement item : element.getAsJsonArray()) {
+      for (JsonNode item : element) {
         values.add(extract(item));
       }
 
       return values;
     }
-    else if (element.isJsonNull()) {
+    else if (element.isNull()) {
       return null;
     }
-    else if (element.isJsonPrimitive()) {
-      JsonPrimitive primitive = element.getAsJsonPrimitive();
+    else  {
+      JsonNode primitive = element;
 
       if (primitive.isBoolean()) {
-        return primitive.getAsBoolean();
+        return primitive.asBoolean();
       }
       else if (primitive.isNumber()) {
-        return primitive.getAsNumber().doubleValue();
+        return primitive.asDouble();
       }
       else {
-        return primitive.getAsString();
+        return primitive.asText();
       }
     }
-
-    return element.toString();
   }
 }

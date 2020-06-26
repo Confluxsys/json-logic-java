@@ -1,6 +1,8 @@
 package io.github.jamsesso.jsonlogic;
 
-import com.google.gson.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.github.jamsesso.jsonlogic.utils.JsonValueExtractor;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -14,18 +16,18 @@ public class FixtureTests {
   private static final List<Fixture> FIXTURES = new ArrayList<>();
 
   @BeforeClass
-  public static void beforeAll() {
+  public static void beforeAll() throws Exception {
     InputStream inputStream = FixtureTests.class.getClassLoader().getResourceAsStream("fixtures.json");
-    JsonParser parser = new JsonParser();
-    JsonArray json = parser.parse(new InputStreamReader(inputStream)).getAsJsonArray();
+    ObjectMapper parser = new ObjectMapper();
+    JsonNode json = parser.readTree(new InputStreamReader(inputStream));
 
     // Pull out each fixture from the array.
-    for (JsonElement element : json) {
-      if (!element.isJsonArray()) {
+    for (JsonNode element : json) {
+      if (!element.isArray()) {
         continue;
       }
 
-      JsonArray array = element.getAsJsonArray();
+      ArrayNode array = (ArrayNode)element;
       FIXTURES.add(new Fixture(array.get(0).toString(), array.get(1), array.get(2)));
     }
   }
@@ -64,7 +66,7 @@ public class FixtureTests {
     private final Object data;
     private final Object expectedValue;
 
-    private Fixture(String json, JsonElement data, JsonElement expectedValue) {
+    private Fixture(String json, JsonNode data, JsonNode expectedValue) {
       this.json = json;
       this.data = JsonValueExtractor.extract(data);
       this.expectedValue = JsonValueExtractor.extract(expectedValue);
