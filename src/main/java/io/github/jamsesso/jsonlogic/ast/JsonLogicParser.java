@@ -33,7 +33,7 @@ public final class JsonLogicParser {
         }
 
         if (root.isArray()) {
-            List<JsonLogicNode> elements = new ArrayList<>();
+            List<JsonLogicNode> elements = new ArrayList<>(root.size());
             for (JsonNode element : root) {
                 elements.add(parse(element));
             }
