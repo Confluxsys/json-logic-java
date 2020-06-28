@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-public abstract class BaseJsonLogic <E extends JsonLogicEvaluator> {
+public class BaseJsonLogic <E extends JsonLogicEvaluator> {
     private final List<JsonLogicExpression> expressions;
     private final Map<String, JsonLogicNode> parseCache;
     private final Function<List<JsonLogicExpression> , E> evaluatorConstructor;
