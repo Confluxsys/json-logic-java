@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class JsonLogicParser {
-    private static final ObjectMapper PARSER = new ObjectMapper();
+    private static ObjectMapper PARSER = null;
 
     private JsonLogicParser() {
         // Utility class has no public constructor.
@@ -20,13 +20,15 @@ public final class JsonLogicParser {
 
     public static JsonLogicNode parse(String json) throws JsonLogicParseException {
         try {
+            if(PARSER==null)
+                PARSER = new ObjectMapper();
             return parse(PARSER.readTree(json));
         } catch (Exception e) {
             throw new JsonLogicParseException(e);
         }
     }
 
-    private static JsonLogicNode parse(JsonNode root) throws JsonLogicParseException {
+    public static JsonLogicNode parse(JsonNode root) throws JsonLogicParseException {
         // Handle null
         if (root.isNull()) {
             return JsonLogicNull.NULL;

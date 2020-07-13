@@ -1,5 +1,6 @@
 package com.confluxsys.util.jsonlogic;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.github.jamsesso.jsonlogic.JsonLogicException;
 import io.github.jamsesso.jsonlogic.ast.JsonLogicNode;
 import io.github.jamsesso.jsonlogic.ast.JsonLogicParser;
@@ -47,6 +48,18 @@ public class BaseJsonLogic <E extends JsonLogicEvaluator> {
         return this;
     }
 
+    public Object apply(JsonNode json, Object data) throws JsonLogicException {
+        String key = json.toString();
+        if (!parseCache.containsKey(key)) {
+            parseCache.put(key, JsonLogicParser.parse(json));
+        }
+
+        if (evaluator == null) {
+            evaluator = evaluatorConstructor.apply(expressions);
+        }
+
+        return evaluator.evaluate(parseCache.get(key), data);
+    }
     public Object apply(String json, Object data) throws JsonLogicException {
         if (!parseCache.containsKey(json)) {
             parseCache.put(json, JsonLogicParser.parse(json));
