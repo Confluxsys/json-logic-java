@@ -1,7 +1,8 @@
 package io.github.jamsesso.jsonlogic;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CustomOperationTests {
   private static final JsonLogic jsonLogic = new JsonLogic();
@@ -9,12 +10,12 @@ public class CustomOperationTests {
   @Test
   public void testCustomOp() throws JsonLogicException {
     jsonLogic.addOperation("greet", args -> String.format("Hello %s!", args[0]));
-    Assert.assertEquals("Hello json-logic!", jsonLogic.apply("{\"greet\": [\"json-logic\"]}", null));
+    assertEquals("Hello json-logic!", jsonLogic.apply("{\"greet\": [\"json-logic\"]}", null));
   }
 
   @Test
   public void testCustomOpWithUppercaseLetter() throws JsonLogicException {
     jsonLogic.addOperation("Greet", args -> String.format("Hello %s!", args[0]));
-    Assert.assertEquals("Hello json-logic!", jsonLogic.apply("{\"Greet\": [\"json-logic\"]}", null));
+    assertEquals("Hello json-logic!", jsonLogic.apply("{\"Greet\": [\"json-logic\"]}", null));
   }
 }

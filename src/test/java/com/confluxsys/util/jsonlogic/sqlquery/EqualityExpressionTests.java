@@ -2,11 +2,13 @@ package com.confluxsys.util.jsonlogic.sqlquery;
 
 import com.confluxsys.util.jsonlogic.BaseJsonLogic;
 import io.github.jamsesso.jsonlogic.JsonLogicException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class EqualityExpressionTests {
     private static final BaseJsonLogic jsonLogic = new JsonLogicToSQL();
