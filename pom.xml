@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.confluxsys</groupId>
     <artifactId>json-logic-java</artifactId>
-    <version>1.0.5_CFX-RELEASE</version>
+    <version>1.0.6_CFX-RELEASE</version>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
